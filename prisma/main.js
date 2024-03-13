@@ -51,6 +51,21 @@ db();*/
 
 db();*/
 
+/*async function db() {
+  try {
+    const test = await prisma.login.create({
+      data: {
+        cpf: '12809204918'
+      },
+    });
+    console.log(test);
+  } catch (error) {
+    console.error('Erro ao criar registro:', error);
+  }
+}
+
+db();*/
+
 
 
 /*async function main() {
@@ -72,7 +87,7 @@ db();*/
 main(); */
 
 
-  const express = require('express')
+  /*const express = require('express')
   const app = express()
   const port = 3000
   
@@ -95,6 +110,41 @@ app.post('/cadastro', (req, res)=> {
       data: {
         nome: dados.nome,
         datanasc: new Date(dados.datanasc)}
+      }).then((dados)=>{
+        res.send(dados);
+     }).catch((erro)=>{
+        console.log(erro);
+        res.send("deu erro");
+     });
+
+})
+
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  })*/
+
+  const express = require('express')
+  const app = express()
+  const port = 3000
+
+app.use(express.json());
+
+  app.get('/login', (req, res) => {
+     prisma.login.findMany().then((dados)=>{
+        res.send(dados);
+     }).catch((erro)=>{
+        console.log(erro);
+        res.send("deu erro");
+     });
+  })
+  
+app.post('/login', (req, res)=> {
+    const dados = req.body;
+    console.log(dados);
+
+    prisma.login.create({
+      data: {
+        cpf: '12809204918'}
       }).then((dados)=>{
         res.send(dados);
      }).catch((erro)=>{
