@@ -117,7 +117,7 @@ app.post('/cadastro', (req, res)=> {
         res.send("deu erro");
      });
 
-})9ivfhd8fgygseyfgs8efg8fgr9aezgf9o
+})
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
@@ -144,7 +144,7 @@ app.post('/login', (req, res)=> {
 
     prisma.login.create({
       data: {
-        cpf: '12809204918'}
+        cpf: dados.cpf}
       }).then((dados)=>{
         res.send(dados);
      }).catch((erro)=>{
@@ -153,7 +153,32 @@ app.post('/login', (req, res)=> {
      });
 
 })
+  
+app.get('/cadastro', (req, res) => {
+  prisma.cadastro.findMany().then((dados)=>{
+     res.send(dados);
+  }).catch((erro)=>{
+     console.log(erro);
+     res.send("deu erro");
+  });
+})
 
+app.post('/cadastro', (req, res)=> {
+  const dados = req.body;
+  console.log(dados);
+
+  prisma.cadastro.create({
+    data: {
+      nome: dados.nome,
+        datanasc: new Date(dados.datanasc)}
+    }).then((dados)=>{
+      res.send(dados);
+   }).catch((erro)=>{
+      console.log(erro);
+      res.send("deu erro");
+   });
+
+})
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
