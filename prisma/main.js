@@ -1,12 +1,13 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
- /*async function db() {
+/*async function db() {
   try {
     const test = await prisma.cadastro.create({
       data: {
         nome: 'Isabella Camila Souza de Paula',
         datanasc: new Date('2007-03-07'),
+        cpf: '14117431994'
       },
     });
     console.log(test);
@@ -17,7 +18,7 @@ const prisma = new PrismaClient();
 
 db();*/
 
- /*async function db() {
+/*async function db() {
   try {
     const test = await prisma.dados.create({
       data: {
@@ -66,8 +67,6 @@ db();*/
 
 db();*/
 
-
-
 /*async function main() {
   try {
     const allCadastros = await prisma.cadastro.findMany({
@@ -86,75 +85,46 @@ db();*/
 
 main(); */
 
-
-  /*const express = require('express')
-  const app = express()
-  const port = 3000
-  
+const express = require("express");
+const app = express();
+const port = 3000;
+const cors = require("cors")
 app.use(express.json());
+app.use(cors())
 
-  app.get('/cadastro', (req, res) => {
-     prisma.cadastro.findMany().then((dados)=>{
-        res.send(dados);
-     }).catch((erro)=>{
-        console.log(erro);
-        res.send("deu erro");
-     });
-  })
-  
-app.post('/cadastro', (req, res)=> {
-    const dados = req.body;
-    console.log(dados);
+app.get("/cadastro", (req, res) => {
+  prisma.cadastro
+    .findMany()
+    .then((dados) => {
+      res.send(dados);
+    })
+    .catch((erro) => {
+      console.log(erro);
+      res.send("deu erro");
+    });
+});
 
-    prisma.cadastro.create({
+app.post("/cadastro", (req, res) => {
+  const dados = req.body;
+  console.log(dados);
+
+  prisma.cadastro
+    .create({
       data: {
         nome: dados.nome,
-        datanasc: new Date(dados.datanasc)}
-      }).then((dados)=>{
-        res.send(dados);
-     }).catch((erro)=>{
-        console.log(erro);
-        res.send("deu erro");
-     });
+        datanasc: new Date(dados.datanasc),
+        cpf: dados.cpf,
+      },
+    })
+    .then((dados) => {
+      res.send(dados);
+    })
+    .catch((erro) => {
+      console.log(erro);
+      res.send("deu erro");
+    });
+});
 
-})
-
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-  })*/
-
-  const express = require('express')
-  const app = express()
-  const port = 3000
-
-app.use(express.json());
-
-  app.get('/login', (req, res) => {
-     prisma.login.findMany().then((dados)=>{
-        res.send(dados);
-     }).catch((erro)=>{
-        console.log(erro);
-        res.send("deu erro");
-     });
-  })
-  
-app.post('/login', (req, res)=> {
-    const dados = req.body;
-    console.log(dados);
-
-    prisma.login.create({
-      data: {
-        cpf: '12809204918'}
-      }).then((dados)=>{
-        res.send(dados);
-     }).catch((erro)=>{
-        console.log(erro);
-        res.send("deu erro");
-     });
-
-})
-
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-  })
-  
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});

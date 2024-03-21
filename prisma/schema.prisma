@@ -17,6 +17,7 @@ model cadastro {
   id       Int      @id @default(autoincrement())
   nome     String   @db.VarChar(50)
   datanasc DateTime @db.Date
+  cpf      String   @db.VarChar(15)
 }
 
 model dados {
@@ -31,9 +32,4 @@ model Pesos {
   id            Int      @id @default(autoincrement())
   valor         String   @db.VarChar(5)
   data_gravacao DateTime @db.Date
-}
-
-model login {
-  id  Int    @id @default(autoincrement())
-  cpf String @db.VarChar(15)
 }
